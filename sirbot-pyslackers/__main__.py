@@ -1,10 +1,10 @@
 import os
 import sys
 import logging.config
-import platformshconfig
 
 import yaml
 import raven
+import platformshconfig
 from sirbot import SirBot
 from raven.processors import SanitizePasswordsProcessor
 from sirbot.plugins.slack import SlackPlugin
@@ -32,9 +32,7 @@ def make_sentry_logger(dsn):
         version = VERSION
 
     client = raven.Client(
-        dsn=dsn,
-        release=version,
-        processor=SanitizePasswordsProcessor,
+        dsn=dsn, release=version, processor=SanitizePasswordsProcessor
     )
     handler = SentryHandler(client)
     handler.setLevel(logging.WARNING)
@@ -75,7 +73,9 @@ def configure_postgresql_plugin():
             dsn=dsn,
         )
     else:
-        raise RuntimeError("No postgresql configuration available. Use POSTGRES_DSN environment variable")
+        raise RuntimeError(
+            "No postgresql configuration available. Use POSTGRES_DSN environment variable"
+        )
 
 
 if __name__ == "__main__":
