@@ -1,5 +1,6 @@
 import os
 import sys
+import asyncio
 import logging.config
 
 import yaml
@@ -84,7 +85,8 @@ if __name__ == "__main__":
 
     if sys.argv[1] == "migrate":
         postgres = configure_postgresql_plugin()
-        postgres.migrate()
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(postgres.migrate())
         sys.exit(0)
 
     bot = SirBot()
