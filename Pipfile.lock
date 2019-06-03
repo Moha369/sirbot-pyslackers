@@ -321,11 +321,10 @@
         },
         "slack-sansio": {
             "hashes": [
-                "sha256:3b96fc4b16e87f9ffaa5f5b1995dbca4866b5445855980810a038e2f4f819a10",
-                "sha256:c41876ac1897f6e8a97f37b5c3be32a0d3c2e7e875c2808ee4e55d00d5bd02e8"
+                "sha256:8ae728207c2db2e09090052100da6826b4b25602ef6163a6f6013b53e21d42fc",
+                "sha256:b4bbde9f2d19496fe46233f0134428156527b4abf8d60caaa09d3d38b16d54c2"
             ],
-            "index": "pypi",
-            "version": "==0.7.1"
+            "version": "==1.0.0"
         },
         "tzlocal": {
             "hashes": [
