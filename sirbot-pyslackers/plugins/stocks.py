@@ -19,6 +19,15 @@ class StockQuote:
     time: datetime
 
 
+@dataclasses.dataclasses(frozen=True)
+class CryptoQuote:
+    symbol: str
+    name: str
+    price: Decimal
+    link: str
+    change_24hr_percent: Decimal
+
+
 class StocksPlugin:
     __name__ = "stocks"
 
@@ -55,9 +64,19 @@ class StocksPlugin:
                 time=datetime.fromtimestamp(quote["regularMarketTime"]),
             )
 
-    async def crypto(self):
-        """https://iextrading.com/developer/docs/#crypto"""
-        url = self.API_ROOT + "/stock/market/crypto"
-        async with self.session.get(url) as r:
+    async def crypto(self, symbol: str) -> CryptoQuote:
+        """https://docs.coincap.io"""
+        async with self.session.get("https://api.coincap.io/v2/rates/") as r:
             r.raise_for_status()
-            return await r.json()
+            top_assets = await r.json()
+
+        symbol = symbol.lower()
+        for asset in top_assets["data"]:
+            if asset["symbol"].lower() == symbol:
+                return CryptoQuote(
+                    symbol=asset["symbol"],
+                    name=asset["name"] or "",
+                    price=Decimal(asset["priceUsd"]),
+                    link="https://coincap.io/assets/" + asset["id"],
+                    change_24hr_percent=Decimal(asset["changePercent24Hr"]),
+                )
