@@ -1,31 +1,31 @@
 import dataclasses
+import datetime
+import decimal
 import os
-from datetime import datetime
-from decimal import Decimal
 
 
 @dataclasses.dataclass(frozen=True)
 class StockQuote:
     symbol: str
     company: str
-    price: Decimal
-    change: Decimal
-    change_percent: Decimal
-    market_open: Decimal
-    market_close: Decimal
-    high: Decimal
-    low: Decimal
-    volume: Decimal
-    time: datetime
+    price: decimal.Decimal
+    change: decimal.Decimal
+    change_percent: decimal.Decimal
+    market_open: decimal.Decimal
+    market_close: decimal.Decimal
+    high: decimal.Decimal
+    low: decimal.Decimal
+    volume: decimal.Decimal
+    time: datetime.datetime
 
 
 @dataclasses.dataclasses(frozen=True)
 class CryptoQuote:
     symbol: str
     name: str
-    price: Decimal
+    price: decimal.Decimal
     link: str
-    change_24hr_percent: Decimal
+    change_24hr_percent: decimal.Decimal
 
 
 class StocksPlugin:
@@ -53,15 +53,15 @@ class StocksPlugin:
             return StockQuote(
                 symbol=quote["symbol"],
                 company=quote["longName"],
-                price=Decimal.from_float(quote["regularMarketPrice"]),
-                change=Decimal.from_float(quote["regularMarketChange"]),
-                change_percent=Decimal.from_float(quote["regularMarketChangePercent"]),
-                market_open=Decimal.from_float(quote["regularMarketOpen"]),
-                market_close=Decimal.from_float(quote["regularMarketPreviousClose"]),
-                high=Decimal.from_float(quote["regularMarketDayHigh"]),
-                low=Decimal.from_float(quote["regularMarketDayLow"]),
-                volume=Decimal.from_float(quote["regularMarketVolume"]),
-                time=datetime.fromtimestamp(quote["regularMarketTime"]),
+                price=decimal.Decimal.from_float(quote["regularMarketPrice"]),
+                change=decimal.Decimal.from_float(quote["regularMarketChange"]),
+                change_percent=decimal.Decimal.from_float(quote["regularMarketChangePercent"]),
+                market_open=decimal.Decimal.from_float(quote["regularMarketOpen"]),
+                market_close=decimal.Decimal.from_float(quote["regularMarketPreviousClose"]),
+                high=decimal.Decimal.from_float(quote["regularMarketDayHigh"]),
+                low=decimal.Decimal.from_float(quote["regularMarketDayLow"]),
+                volume=decimal.Decimal.from_float(quote["regularMarketVolume"]),
+                time=datetime.datetime.fromtimestamp(quote["regularMarketTime"]),
             )
 
     async def crypto(self, symbol: str) -> CryptoQuote:
@@ -76,7 +76,7 @@ class StocksPlugin:
                 return CryptoQuote(
                     symbol=asset["symbol"],
                     name=asset["name"] or "",
-                    price=Decimal(asset["priceUsd"]),
+                    price=decimal.Decimal(asset["priceUsd"]),
                     link="https://coincap.io/assets/" + asset["id"],
-                    change_24hr_percent=Decimal(asset["changePercent24Hr"]),
+                    change_24hr_percent=decimal.Decimal(asset["changePercent24Hr"]),
                 )
