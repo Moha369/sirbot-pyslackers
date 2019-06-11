@@ -67,14 +67,14 @@ async def crypto_quote(message, app):
                 attachments=[
                     {
                         "color": color,
-                        "title": f'{quote.symbol} ({quote.name}): ${quote.price:,.4f}',
+                        "title": f"{quote.symbol} ({quote.name}): ${quote.price:,.4f}",
                         "title_link": quote.link,
                         "fields": [
                             {
                                 "title": "Change (24hr)",
                                 "value": f"{quote.change_24hr_percent:,.4f}%",
-                            },
-                        ]
+                            }
+                        ],
                     }
                 ]
             )
@@ -94,7 +94,7 @@ async def stock_quote(message, app):
 
     response = message.response()
     try:
-        quote = (await stocks.price(symbol))
+        quote = await stocks.price(symbol)
         LOG.debug("Quote from API: %s", quote)
     except ClientResponseError as e:
         LOG.error("Error retrieving stock quotes: %s", e)
@@ -113,37 +113,37 @@ async def stock_quote(message, app):
                 attachments=[
                     {
                         "color": color,
-                        "title": f'{quote.symbol} ({quote.company}): ${quote.price:,.4f}',
+                        "title": f"{quote.symbol} ({quote.company}): ${quote.price:,.4f}",
                         "title_link": f"https://finance.yahoo.com/quote/{quote.symbol}",
                         "fields": [
                             {
                                 "title": "Change",
-                                "value": f'${quote.change:,.4f} ({quote.change_percent:,.4f}%)',
+                                "value": f"${quote.change:,.4f} ({quote.change_percent:,.4f}%)",
                                 "short": True,
                             },
                             {
                                 "title": "Volume",
-                                "value": f'{quote.volume:,}',
+                                "value": f"{quote.volume:,}",
                                 "short": True,
                             },
                             {
                                 "title": "Open",
-                                "value": f'${quote.market_open:,.4f}',
+                                "value": f"${quote.market_open:,.4f}",
                                 "short": True,
                             },
                             {
                                 "title": "Close",
-                                "value": f'${quote.market_close:,.4f}',
+                                "value": f"${quote.market_close:,.4f}",
                                 "short": True,
                             },
                             {
                                 "title": "Low",
-                                "value": f'${quote.low:,.4f}',
+                                "value": f"${quote.low:,.4f}",
                                 "short": True,
                             },
                             {
                                 "title": "High",
-                                "value": f'${quote.high:,.4f}',
+                                "value": f"${quote.high:,.4f}",
                                 "short": True,
                             },
                         ],
