@@ -19,7 +19,7 @@ class StockQuote:
     time: datetime.datetime
 
 
-@dataclasses.dataclasses(frozen=True)
+@dataclasses.dataclass(frozen=True)
 class CryptoQuote:
     symbol: str
     name: str
